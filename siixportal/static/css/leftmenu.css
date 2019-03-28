@@ -1,0 +1,51 @@
+body{background-color: #f3f3f4;overflow: hidden;}
+.vue-component table th{padding:0.75rem !important;vertical-align: middle !important;background: #f3f3f4}
+.vue-component table td{padding:10px;vertical-align: middle !important;}
+/* .content-wrapper .vue-component{position: absolute;left: 0;right: 0;top: 0;bottom: 0;background-color: #fff; padding: 10px;} */
+.content-wrapper .vue-component{width:100%}
+.content-wrapper .feedback{color:red;}
+/*.vue-component .div-content{padding: 10px;background: #fff;border-radius: 10px} */
+
+/* .vue-component .div-table{ position: absolute;left: 10px;right: 10px;top:55px;bottom: 50px;overflow: hidden;overflow-y: scroll;}
+.vue-component .div-table{overflow: hidden;overflow-y: scroll;}
+.vue-component .div-table::-webkit-scrollbar {display: none;} */
+
+
+/* .paging{position: absolute;right: 10px;bottom:10px;}  
+.vue-component table thead{text-align: center;background-color: #eee}*/
+
+
+/*人力报表 表格单元格样式*/
+
+#app,.form-control,.btn{
+    font-size:0.9rem;
+    
+}
+.clickable{
+    cursor: pointer;
+    color: rgb(95, 154, 243);
+}
+
+.spliter{
+    padding: 5px;
+    border-bottom: 2px solid #00bcd4;
+}
+
+.td-btn{font-size: 0.7rem;padding:.9px .5rem}
+
+.cust-dialog{
+    position: relative;
+    width: 50%;
+    margin: 5vh auto 0 auto;
+}
+.cust-modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.3);
+}
+.cust-card-title{
+    font-weight: 600;
+}

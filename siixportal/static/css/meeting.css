@@ -1,0 +1,16 @@
+.vue-meeting #tabdiv{position:relative;width:100%;border-bottom: 2px solid #000;}
+.vue-meeting #div-tabdata{overflow-y:scroll;-ms-overflow-y:scroll;}
+.vue-meeting #div-tabdata::-webkit-scrollbar {display: none;}
+.vue-meeting table{font-size:14px;}
+#tabdata th{vertical-align: middle !important;padding:0.6rem !important}
+#tabdata td{padding:5px;vertical-align: middle !important;}
+.vue-meeting .text-nowrap{color:#fff;overflow:hidden;white-space: nowrap;text-overflow: ellipsis;cursor: pointer;}
+.vue-meeting .border-right-x2{border-right:1px solid #000 !important;}
+.vue-meeting .border-left-x2{border-left:1px solid #000 !important;}
+.vue-meeting .border-top-x2{border-top:2px solid #000 !important;}
+.vue-meeting .border-bottom-x2{border-bottom:2px solid #000 !important;}
+.vue-meeting .weekend-bg-color{background-color:#e3c6e2;}
+
+.vue-meeting #tips th{color:#fff;overflow:hidden;white-space: nowrap;text-overflow: ellipsis;}
+.vue-meeting #tips span{margin-right: 5px;color:yellow;}
+.vue-meeting .tip-title{width: 80px;text-align: center;}
