@@ -7,33 +7,36 @@ import Page404 from '@/components/common/page404.vue';
 import Index from '@/components/common/index.vue';
 import Main from '@/components/main';
 //公共数据
-import User from '@/components/basedata/user';
-import Role from '@/components/basedata/role';
-import Part from '@/components/basedata/part';
-import Eng from '@/components/basedata/eng';
-import Chkroute from '@/components/basedata/chkroute';
+import User from '@/components/basedata/user'
+import Role from '@/components/basedata/role'
+import Part from '@/components/basedata/part'
+import Eng from '@/components/basedata/eng'
+import Chkroute from '@/components/basedata/chkroute'
 //会议室预约
-import Room from '@/components/meeting/room';
-import Meeting from '@/components/meeting/meeting';
-import Mybooking from '@/components/meeting/mybooking';
+import Room from '@/components/meeting/room'
+import Meeting from '@/components/meeting/meeting'
+import Mybooking from '@/components/meeting/mybooking'
 //人力计算
-import Mapping from '@/components/calcman/mapping';
-import Productive from '@/components/calcman/productive';
-import Shippingplan from '@/components/calcman/shippingplan';
-import Manreport from '@/components/calcman/manreport';
-import Manrequest from '@/components/calcman/manrequest';
+import Mapping from '@/components/calcman/mapping'
+import Productive from '@/components/calcman/productive'
+import Shippingplan from '@/components/calcman/shippingplan'
+import Manreport from '@/components/calcman/manreport'
+import Manrequest from '@/components/calcman/manrequest'
 //报关系统
-import Bando from '@/components/custom/bando';
+import Bando from '@/components/custom/bando'
 //仓库系统
-import Deliverynote from '@/components/warehouse/deliverynote';
+import Deliverynote from '@/components/warehouse/deliverynote'
 //物品外置系统
-import Wfrequest from '@/components/waifang/wfrequest';
-import Wfoverview from '@/components/waifang/wfoverview';
+import Wfrequest from '@/components/waifang/wfrequest'
+import Wfoverview from '@/components/waifang/wfoverview'
 //tar
-import RepairGroup from '@/components/tar/repairgroup';
-import DeviceArea from '@/components/tar/devicearea';
-import Device from '@/components/tar/device';
-import Tarreport from '@/components/tar/tarreport';
+import RepairGroup from '@/components/tar/repairgroup'
+import DeviceArea from '@/components/tar/devicearea'
+import Device from '@/components/tar/device'
+import Tarreport from '@/components/tar/tarreport'
+
+//smt
+import StencilMgr from '@/components/smt/stencilmgr'
 
 Vue.use(Router)
 Vue.use(Vuex)
@@ -112,6 +115,8 @@ export default new Router({
           devicearea:DeviceArea,
           device:Device,
           tarreport:Tarreport,
+
+          stencilmgr:StencilMgr,
 
         }}
       ],

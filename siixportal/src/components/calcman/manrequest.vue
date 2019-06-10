@@ -192,7 +192,8 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(()=>{
-                var data = 'applyno='+item.apply_no+'&chkuser='+this.userinfo.emp_no+'&menuid='+this.menuRight.menuid+'&chktype=0&chklevel=0'
+                var data = 'applyno='+item.apply_no+'&chkuser='+this.userinfo.emp_no
+                    +'&menuid='+this.menuRight.menuid+'&chktype=0&chklevel=0&applyuser='+item.apply_user;
                 this.$store.dispatch('approveRequest',{data:data,cb:res=>{
                     if(res.errcode==0){
                         this.$message({message:'提交成功',type:'success'});

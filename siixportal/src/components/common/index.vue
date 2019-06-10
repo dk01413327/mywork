@@ -1,53 +1,43 @@
 <template>
     <div class="vue-component">
-        <el-row>
-            <el-col :span="24">
-                <div class="jumbotron col-12">
-                    <h1 class="display-4">{{userinfo.emp_name}},欢迎使用!</h1>
-                </div>
-                <div class="card" v-if="mycheck && mycheck.length>0">
-                    <h5 class="card-header">待审单据</h5>
-                    <div class="card-body">
-                        <el-table :data="mycheck">
-                            <el-table-column label="单据类型" prop="menu_name"></el-table-column>
-                            <el-table-column label="申请单号" >
-                                <template slot-scope="scope">
-                                    <span class="clickable" @click="query(scope.row)">{{scope.row.apply_no}}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="申请人" prop="emp_name"></el-table-column>
-                            <el-table-column label="申请部门" prop="dept"></el-table-column>
-                            <el-table-column label="提交时间" prop="chk_time" min-width="140"></el-table-column>
-                            <el-table-column label="操作" min-width="120px">
-                                <template slot-scope="scope">
-                                    <el-button size="mini"  type="primary" @click="approve(scope.row)">批准</el-button>
-                                    <el-button size="mini"  type="danger" @click="back(scope.row)">退单</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </div>
-                </div>
-            </el-col>
-        </el-row>
-        <el-row :gutter="5" style="margin-top:5px" v-if="mycheck.length==0">
-            <el-col :span="12" >
-                <div class="card" style="height:250px">
-                    <h5 class="card-header">系统日志</h5>
-                    <div class="card-body">
-                        <ul v-for="(item,idx) in syslog" :key="idx">
-                            <li class="head-log">
-                                <el-badge value="new" v-if="idx==0"><h4 class="card-title text-primary float-left" >{{item.version}}</h4></el-badge>
-                                <h4 class="card-title text-primary float-left" v-else>{{item.version}}</h4>
-                                <small>修改日期:{{item.modify_time}}</small>
-                            </li>
-                            
-                            <li class="text-log">{{item.modify_log}}</li>
-                        </ul>                       
-                    </div>
-                </div>
-            </el-col>
-            <el-col :span="12" >
-                
+        <el-card style="background:#eee;margin-bottom:20px" shadow="nerver">
+            <h5 style="margin:20px;color:#409EFF">{{userinfo.emp_name}},欢迎使用!</h5>
+        </el-card>
+        <el-badge v-if="mycheck && mycheck.length>0" ><h5>待审单据</h5></el-badge>
+        <el-card  v-if="mycheck && mycheck.length>0" shadow="nerver">
+                               
+            <el-table :data="mycheck">
+                <el-table-column label="单据类型" prop="menu_name"></el-table-column>
+                <el-table-column label="申请单号" >
+                    <template slot-scope="scope">
+                        <span class="clickable" @click="query(scope.row)">{{scope.row.apply_no}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="申请人" prop="emp_name"></el-table-column>
+                <el-table-column label="申请部门" prop="dept"></el-table-column>
+                <el-table-column label="提交时间" prop="chk_time" min-width="140"></el-table-column>
+                <el-table-column label="操作" min-width="120px">
+                    <template slot-scope="scope">
+                        <el-button size="mini"  type="primary" @click="approve(scope.row)" v-loading.fullscreen.lock="fullscreenLoading">批准</el-button>
+                        <el-button size="mini"  type="danger" @click="back(scope.row)" v-loading.fullscreen.lock="fullscreenLoading">退单</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>                
+        </el-card>
+        <el-row :gutter="5" v-if="!mycheck || mycheck.length==0">
+            <el-col :span="24" >
+                <h5 >系统日志</h5>
+                <el-card style="height:350px;overflow: auto;background:#eee" shadow="nerver">                    
+                    <ul >
+                        <li class="head-log" v-for="(item,idx) in syslog" :key="idx">
+                            <el-badge value="new" v-if="idx==0"><h4 class="card-title text-primary float-left" >{{item.version}}</h4></el-badge>
+                            <h4 class="card-title text-primary float-left" v-else>{{item.version}}</h4>
+                            <small>修改日期:{{item.modify_time}}</small>
+                            <div class="text-log">修改描述：{{item.modify_log}}</div>
+                        </li>
+                        
+                    </ul>                 
+                </el-card>
             </el-col>
         </el-row>
         <manrequestedt :edit-data='editData' :edit-visible="manVisible" :approve="true" :menuid="menuid"
@@ -67,6 +57,7 @@ export default {
             manVisible:false,
             editData: '',
             menuid: '',
+            fullscreenLoading :false,
         }
     },
     computed:{
@@ -96,8 +87,10 @@ export default {
             this.$confirm('确定批准此单?','提示',{confirmButtonText:'确定',cancelButtonText:'取消'}).then(({value})=>{
                 var post = 'applyno='+item.apply_no
                           +'&chkuser='+_this.userinfo.emp_no+'&chktype=1&memo='+value
-                          +'&menuid='+item.menu_id+'&chklevel='+item.chk_level;
+                          +'&menuid='+item.menu_id+'&chklevel='+item.chk_level+'&applyuser='+item.apply_user;
+                this.fullscreenLoading = true;
                 this.$store.dispatch('approveRequest',{data:post,cb:(res)=>{
+                    this.fullscreenLoading = false;
                     if(res.errcode==0){
                         this.$message({message:'审核成功',type:'success'});
                         _this.getMyData(); 
@@ -112,8 +105,10 @@ export default {
             this.$prompt('请输入退单原因:','提示',{confirmButtonText:'确定',cancelButtonText:'取消'}).then(({value})=>{
                 var post = 'applyno='+item.apply_no
                           +'&chkuser='+_this.userinfo.emp_no+'&chktype=2&memo='+value
-                          +'&menuid='+item.menu_id+'&chklevel='+item.chk_level;
+                          +'&menuid='+item.menu_id+'&chklevel='+item.chk_level+'&applyuser='+item.apply_user;
+                this.fullscreenLoading = true;
                 this.$store.dispatch('approveRequest',{data:post,cb:(res)=>{
+                    this.fullscreenLoading = false;
                     if(res.errcode==0){
                         this.$message({message:'退单成功',type:'success'});
                         _this.getMyData(); 

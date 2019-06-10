@@ -31,6 +31,9 @@ const actions = {
     },
     cancelBooking(context,data){
         pub.cancelBooking(data.data,data.cb)
+    },
+    get_attend_person(context,data){
+        pub.get_attend_person(data.data,data.cb);
     }
 }
 

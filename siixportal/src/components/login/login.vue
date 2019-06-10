@@ -75,7 +75,6 @@ export default {
             var _this = this;
             var data = $('#form-login').serialize();
             this.$store.dispatch('login',{'data':data,'cb':(res)=>{
-                console.log(res)
                 if(res.errcode == 0){
                     if($('#remember').is(':checked')){
                         window.localStorage.setItem('userinfo',JSON.stringify(res.data));
@@ -150,4 +149,3 @@ input{
     bottom: 10px;
 }
 </style>
-

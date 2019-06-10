@@ -125,22 +125,14 @@
                             </div>
                             
                             <div id="dostep2" style="display: none; padding:0 20px">
-                                <input id="search" class="form-control col-2" style="margin-bottom: 5px" placeholder="输入工号回车...">
-                                <div class="div-scroll">
-                                    <table class="table table-bordered table-striped">
-                                        <thead class="thead-light"><tr><th></th><th>工号</th><th>姓名</th><th>部门</th></tr></thead>
-                                        <tbody id="tby-attendance">
-                                            <tr v-for="(emp,idx) in emps" v-if="emp.enabled=='启用' && emp.emp_no!='admin'" :key="idx">
-                                                <td><input type="checkbox" name="attend[]" :value="emp.emp_no"></td>
-                                                <td>{{emp.emp_no}}</td>
-                                                <td>{{emp.emp_name}}</td>
-                                                <td>{{emp.dept}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="div-scroll row">                                    
+                                    <el-transfer :titles="['用户列表','已选用户']" 
+                                        filterable
+                                        :data="emps" 
+                                        :props="{'key':'emp_no','label':'emp_name'}"
+                                        v-model="selEmps" style="margin:auto">
+                                    </el-transfer>
                                 </div>
-                                
-                                
                             </div>
                             
                             <div id="dostep3" style="display: none">
@@ -271,6 +263,7 @@ export default {
             bkinfo:[],
             rooms:[],
             emps:[],
+            selEmps:[],
             days:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],
             times:['07:00','07:15','07:30','07:45','08:00','08:15','08:30','08:45','09:00','09:15','09:30','09:45','10:00'
                 ,'10:15','10:30','10:45','11:00','11:15','11:30','11:45','12:00','12:15','12:30','12:45','13:00'
@@ -459,7 +452,6 @@ export default {
                     }
             });
         },
-
         checkMeetingType(value){
             if(value == 0 || value=='内部'){
                 $('#div-custname').css('display','none')
@@ -505,7 +497,6 @@ export default {
             }
             _this.showRateSelect(0);
         },
-        
         showSelectValue(){
             var seltext = '';  
             if($('#rate-select-menu1').css('display')=='none'){
@@ -519,8 +510,6 @@ export default {
             }            
             $('#rate-text').val(seltext.substr(1));
         },
-        
-
         showBooking(){
             this.$store.dispatch('getUser',{'data':'','cb':res=>{
                 this.emps = res.data;
@@ -561,13 +550,13 @@ export default {
             $('#dostep'+index).css('display','block');
 
         },
-
         saveBookingData (){
             if(this.checkMeetingData()==false){
                 return false;
             }
             var data = $("#form-booking").serialize();
-            data += '&userno='+this.userinfo.emp_no;
+            data += '&userno='+this.userinfo.emp_no+'&attend='+this.selEmps;
+            
             this.$store.dispatch('save_booking_data',{'data':data,'cb':(res)=>{
                 if(res.errcode=='0'){
                     this.$toast('预约成功');
@@ -633,6 +622,12 @@ export default {
                 this.$toast('只有申请者和管理员才能修改');
                 return false;
             }
+            this.$store.dispatch('get_attend_person',{data:'bkno='+this.bkinfo.bookingno,cb:res=>{
+                this.selEmps = [];
+                for(var i=0; i<res.data.length;i++){
+                    this.selEmps.push(res.data[i].attendance)
+                }                
+            }})
             this.showBooking();
             this.addTime(); 
             $('#bkno').attr('value',this.bkinfo.bookingno);
@@ -663,7 +658,7 @@ export default {
                     }
                 })
                 this.showSelectValue();                
-            }            
+            }
             $('#tips').hide();
         }, 
 
@@ -737,7 +732,7 @@ function changeWidth(){
     $('#div-tabdata').css('height',window.innerHeight-40);
     $('#tabhead th').each(function(idx){
         $(this).css('width',$('#tabdata tr th:eq('+idx+')').outerWidth());
-    })
+    });
 }
 window.onresize=function(){changeWidth()}
 </script>
@@ -777,10 +772,10 @@ window.onresize=function(){changeWidth()}
     .vue-meeting .btn{font-size:1rem !important;}
     .vue-meeting #btn-booking{font-size:1.2rem !important;position: fixed;width:120px;margin:0 auto;left: 0;right: 0;bottom: 8px;z-index: 1;}
     .vue-meeting #btn-booking:hover{transform: scale(1.2);background-color: blue;}
-    .vue-meeting .div-scroll{
+    .div-scroll{
         overflow: hidden;
         overflow-y: auto;
-        height: 300px;
+        height: 350px;
     }
     
 </style>

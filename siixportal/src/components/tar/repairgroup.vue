@@ -78,7 +78,7 @@ export default {
         },
         addGroup(){
             if(this.groupname==''){
-                this.$alert('请输入组别名称','出错啦',{type:error});
+                this.$alert('请输入组别名称','出错啦',{type:'error'});
                 return;
             }
             this.$store.dispatch('saveRepairGroup',{data:'gname='+this.groupname+'&opuser='+this.userinfo.emp_no,cb:(res)=>{

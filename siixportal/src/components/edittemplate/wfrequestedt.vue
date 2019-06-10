@@ -130,7 +130,6 @@ export default {
             if(data){
                 var item = JSON.parse(data);
             }
-            console.log(item)
             this.formData.rid = item.id ? item.id : 0;
             this.formData.storegoods = item.store_goods ? item.store_goods : '';
             this.formData.locid = item.loc_id ? item.loc_id : '';
@@ -153,6 +152,7 @@ export default {
             this.formData.optype =  item.optype ? item.optype : 'new';
             this.formData.chk_level = item.chk_level ? item.chk_level : 0;
             this.formData.apply_no = item.apply_no ? item.apply_no : '';
+            this.formData.apply_no = item.apply_user ? item.apply_user : '';            
         },
         editVisible(value){
             this.dialogVisible = value;
@@ -184,9 +184,9 @@ export default {
                 file1:'',
                 opuser:'',
                 optype:'new',
-
                 chk_level:0,
                 apply_no:'',
+                apply_user:'',
             },
             rules:{
                 storegoods:{required:true,message:'请输入存放物品',trigger:'blur'},
@@ -257,7 +257,7 @@ export default {
                 this.$store.dispatch('uploadfile',{'data':fd,'cb':(res)=>{
                     var jsonObj = JSON.parse(res);
                     if(jsonObj.errcode==1){
-                        this.$alert(jsonObj.errmsg,'出错啦',{ype:'error'});
+                        this.$alert(jsonObj.errmsg,'出错啦',{type:'error'});
                     }else{
                         this.saveDataEx(jsonObj);
                     }
@@ -310,7 +310,7 @@ export default {
             this.$confirm('确定批准此单?','提示',{confirmButtonText:'确定',cancelButtonText:'取消'}).then(({value})=>{
                 var post = 'applyno='+this.formData.apply_no
                           +'&chkuser='+_this.formData.opuser+'&chktype=1&memo='+value
-                          +'&menuid='+this.menuid+'&chklevel='+this.formData.chk_level;
+                          +'&menuid='+this.menuid+'&chklevel='+this.formData.chk_level+'&applyuser='+this.formData.apply_user;
                 this.$store.dispatch('approveRequest',{data:post,cb:(res)=>{
                     if(res.errcode==0){
                         this.$message({message:'审核成功',type:'success'});
@@ -326,7 +326,7 @@ export default {
             this.$prompt('请输入退单原因:','提示',{confirmButtonText:'确定',cancelButtonText:'取消'}).then(({value})=>{
                 var post = 'applyno='+this.formData.apply_no
                           +'&chkuser='+_this.userinfo.emp_no+'&chktype=2&memo='+value
-                          +'&menuid='+this.menuid+'&chklevel='+this.formData.chk_level;
+                          +'&menuid='+this.menuid+'&chklevel='+this.formData.chk_level+'&applyuser='+this.formData.apply_user;
                 this.$store.dispatch('approveRequest',{data:post,cb:(res)=>{
                     if(res.errcode==0){
                         this.$message({message:'退单成功',type:'success'});

@@ -2,7 +2,8 @@
     <div style="padding-top:5px">
         <el-pagination
             background
-            layout="prev, pager, next"
+            layout="total,sizes,prev, pager, next"
+            :page-sizes="[10, 20, 50]"
             @prev-click="prev"
             @next-click="next"
             @current-change='curChange'
@@ -45,10 +46,12 @@ export default {
             this.index = val || 1
         },
         pageSize(val){
-            console.log(val);
+            //console.log('pagesize:'+val);
             this.limit = val || 10
+            //console.log(this.limit);
         },
         total(val){
+            //console.log('total:'+val)
             this.size = val || 1;
         }
     },

@@ -7,6 +7,7 @@ import custom from './modules/custom'
 import warehouse from './modules/warehouse'
 import others from './modules/others'
 import tar from './modules/tar'
+import smt from './modules/smt'
 Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
@@ -21,6 +22,7 @@ export default new Vuex.Store({
      warehouse,
      others,
      tar,
+     smt,
    },
 
   strict: debug

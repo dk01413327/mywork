@@ -5,6 +5,8 @@ const state={
     imageUrl :process.env.NODE_ENV=='development' ?'http://192.168.186.127/app/public':'http://192.168.186.125',
     //downloadUrl:'http://192.168.186.127/app/public',
     //imageUrl :'http://192.168.186.127/app/public',
+    //downloadUrl:'http://192.168.186.57/app/public',
+    //imageUrl :'http://192.168.186.57/app/public',
     userinfo:null,
     menu:null,
     rooms:[],
@@ -67,6 +69,10 @@ const actions={
         });
     },
     getCheckRecord(context,params){pub.getCheckRecord(params.data,params.cb);},
+    getDept(context,params){
+        var data = 'userno='+context.getters.userinfo.emp_no;
+        pub.getDept(data,params.cb);
+    },
     getUser(context,params){
         var data = 'userno='+context.getters.userinfo.emp_no;
         pub.getUser(data,params.cb);
@@ -96,6 +102,9 @@ const actions={
             context.commit('getRoles',res);
         })
     },
+
+    getDeptCheckRoute(context,params){pub.getDeptCheckRoute(params.data,params.cb);},
+
     saveChkRoute(context,params){pub.saveChkRoute(params.data,params.cb);},
     saveRouteLevel(context,params){pub.saveRouteLevel(params.data,params.cb);},
     getChkRoute(context,params){pub.getChkRoute(params.data,params.cb);},

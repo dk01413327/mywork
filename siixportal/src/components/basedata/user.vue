@@ -45,9 +45,8 @@
             </el-table>
             
             <paging class="paging" :page-index="currentPage" :class="{'d-none':(pagedata ? pagedata.length==1 : users.lengt<getPageSize)}"
-            :total="users.length" :page-size="getPageSize" @change="pageChange"></paging>
-            
-        </div>  
+            :total="users.length" :page-size="getPageSize" @change="pageChange"></paging>            
+        </div>
 
         <div class="modal fade" id="div-employee" >
             <div class="modal-dialog" role="document" style="max-width:50%">
@@ -143,7 +142,8 @@
         <el-dialog title="权限设置" :visible.sync="dialogVisible">
             <p id="username" class="text-center border-bottom" style="font-size:20px;font-weight:600"></p>
             <div class="row" style="min-height:300px;">
-                <el-transfer :titles="['角色列表','已选角色']" 
+                <el-transfer :titles="['角色列表','已选角色']"
+                    filterable 
                     :data="sysroles" 
                     :props="{'key':'role_id','label':'role_name'}"
                     v-model="userroles" style="margin:auto">
@@ -158,7 +158,7 @@
 
 </template>
 <script>
-import {mapGetters, mpaActions} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 export default {
     name:'user',
     data(){

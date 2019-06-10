@@ -6,7 +6,6 @@
     <script type="text/javascript" src="/static/js/ThreeJS/three.min.js"></script>
     <script type="text/javascript" src="/static/js/ThreeJS/ThreeBSP.js"></script>
     <script type="text/javascript" src="/static/js/ThreeJS/Earcut.js"></script>
-    
     <title>SED Portal</title>
   </head>
   <body>
@@ -14,4 +13,11 @@
     <!-- built files will be auto injected -->
     
   </body>
+  <script type="text/javascript">
+    window.onresize = function(){
+      var ele = document.getElementById('wrapper');
+      ele.style.height = window.innerHeight+'px';
+      //$('#wrapper').css('height',window.innerHeight); console.log('123213')
+    }
+  </script>
 </html>

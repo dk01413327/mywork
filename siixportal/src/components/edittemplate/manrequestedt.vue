@@ -229,9 +229,9 @@ export default {
 
             this.formData.chk_level = item.chk_level ?  item.chk_level : 0;
             this.formData.apply_no = item.apply_no ?  item.apply_no : '';
+            this.formData.apply_user = item.apply_user ?  item.apply_user : '';            
         },
         editVisible(value){
-            console.log(value);
             this.dialogVisible = value;
         }
     },
@@ -269,6 +269,7 @@ export default {
 
                 chk_level:0,
                 apply_no:'',
+                apply_user:'',
             },
             rules:{
                 position:{required:true,message:'请输入需求职位',trigger:'blur'},
@@ -317,7 +318,7 @@ export default {
             this.$confirm('确定批准此单?','提示',{confirmButtonText:'确定',cancelButtonText:'取消'}).then(({value})=>{
                 var post = 'applyno='+this.formData.apply_no
                           +'&chkuser='+_this.formData.opuser+'&chktype=1&memo='+value
-                          +'&menuid='+this.menuid+'&chklevel='+this.formData.chk_level;
+                          +'&menuid='+this.menuid+'&chklevel='+this.formData.chk_level+'&applyuser='+this.formData.apply_user;
                 this.$store.dispatch('approveRequest',{data:post,cb:(res)=>{
                     if(res.errcode==0){
                         this.$message({message:'审核成功',type:'success'});
@@ -333,7 +334,7 @@ export default {
             this.$prompt('请输入退单原因:','提示',{confirmButtonText:'确定',cancelButtonText:'取消'}).then(({value})=>{
                 var post = 'applyno='+this.formData.apply_no
                           +'&chkuser='+_this.userinfo.emp_no+'&chktype=2&memo='+value
-                          +'&menuid='+this.menuid+'&chklevel='+this.formData.chk_level;
+                          +'&menuid='+this.menuid+'&chklevel='+this.formData.chk_level+'&applyuser='+this.formData.apply_user;
                 this.$store.dispatch('approveRequest',{data:post,cb:(res)=>{
                     if(res.errcode==0){
                         this.$message({message:'退单成功',type:'success'});

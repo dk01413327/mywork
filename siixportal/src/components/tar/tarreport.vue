@@ -226,7 +226,7 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
     .el-card:hover{
         transform: scale(1.02)
     }

@@ -1,6 +1,7 @@
 var cnostdev = "http://192.168.186.127/app/public/index/";
-//var constprd = "https://www.siix.gd.cn/app/public/index/";
+//var constprd = "http://192.168.186.57/app/public/index/";
 var constprd = "http://192.168.186.125/index/";
+//var constprd =  "http://192.168.186.127/app/public/index/";
 var data = '';
 function getServerUrl(method,fun){
     var url = '';
@@ -44,14 +45,15 @@ export default{
     getCheckDetail(data,cb){callServer('index/get_check_detail',data,cb)},
     getCheckRecord(data,cb){callServer('index/get_check_record',data,cb)},
 //会议室预定
-    getRoom(data,cb){callServer('index/get_room_data',data,cb);},
-    saveRoom(data,cb){callServer('index/save_meeting_room',data,cb);}, 
-    booking_data_overview(data,cb){callServer('index/get_booking_data2',data,cb);},
-    saveBookingData(data,cb){callServer('index/save_booking_data',data,cb);},
-    cancelBooking(data,cb){callServer('index/cancel_booking',data,cb);},
-    getMyBooking(data,cb){callServer('index/get_my_meeting',data,cb);},
-
+    getRoom(data,cb){callServer('meetingbook/get_room_data',data,cb);},
+    saveRoom(data,cb){callServer('meetingbook/save_meeting_room',data,cb);}, 
+    booking_data_overview(data,cb){callServer('meetingbook/get_booking_data2',data,cb);},
+    saveBookingData(data,cb){callServer('meetingbook/save_booking_data',data,cb);},
+    cancelBooking(data,cb){callServer('meetingbook/cancel_booking',data,cb);},
+    getMyBooking(data,cb){callServer('meetingbook/get_my_meeting',data,cb);},
+    get_attend_person(data,cb){callServer('meetingbook/get_attend_person',data,cb);},
 //公共数据
+    getDept(data,cb){callServer('index/get_dept_data',data,cb);},
     getUser(data,cb){callServer('index/get_employee_data',data,cb);},
     saveUser(data,cb){callServer('index/save_emp_data',data,cb);},        
     addRole(data,cb){callServer('index/add_role',data,cb);},
@@ -75,6 +77,7 @@ export default{
         })  
     },
     saveUserRole(data,cb){callServer('index/save_user_role',data,cb);},
+    getDeptCheckRoute(data,cb){callServer('index/get_dept_chk_route',data,cb);},
     saveChkRoute(data,cb){callServer('index/save_menu_chk_route',data,cb)},
     getChkRoute(data,cb){callServer('index/get_menu_chk_route',data,cb)},
     getParts(data,cb){callServer('index/get_part_data',data,cb);},
@@ -114,6 +117,14 @@ export default{
     saveWfRequestData(data,cb){callServer('others/save_wf_request_data',data,cb)},
     delWFRequestData(data,cb){callServer('others/del_wf_request',data,cb)},
     closeWfRequest(data,cb){callServer('others/close_wf_request',data,cb)},
+
+//smt
+    getStencilData(data,cb){callServer('smt/get_stencil_data',data,cb)},
+    getStencilTravel(data,cb){callServer('smt/get_stencil_travel',data,cb)},    
+    saveStencilData(data,cb){callServer('smt/save_stencil_data',data,cb)},
+    getStencilMaxno(data,cb){callServer('smt/get_max_no',data,cb)},
+    getStencilByno(data,cb){callServer('smt/get_stencil_by_no',data,cb)},
+    
 
 //上传文件
     uploadfile(data,cb){

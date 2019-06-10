@@ -2,11 +2,11 @@
     <el-container>
         <el-container id="wrapper">
             <el-menu class="left-menu" unique-opened router background-color="#e3f2fd" active-text-color="red" :collapse="isCollapse">
-                <el-menu-item class="logo" index="/">
+                <el-menu-item class="logo" index="index">
                     <i v-if="isCollapse" class="logo-text">SED</i>
                     <span ><img style="height:45px" src='/static/images/logo.gif' /></span>
                 </el-menu-item>
-                <el-menu-item index="/index" @click="add('index','index')">           
+                <el-menu-item index="/index" @click="add('index')">           
                     <i class="el-icon-location"></i>
                     <span>首页</span>
                 </el-menu-item>
@@ -22,9 +22,10 @@
                         </el-menu-item>
                     </el-menu-item-group>
                 </el-submenu>
-            </el-menu>            
+            </el-menu>
 
             <el-container>
+                <el-main id='page-main'>
                 <el-header class="page-header" >
                     <el-row type="flex" align="middle" >
                         <el-col :span="1" class="nav-push" >
@@ -43,7 +44,7 @@
                         </el-col>
                     </el-row>
                 </el-header>
-                <el-main id='page-main'>
+                
                     <keep-alive>
                     <el-tabs v-model="activeTab" type="border-card" closable  @tab-remove="removeTab">  
                         <template  v-for="(item,idx) in tabs" >                     
@@ -76,7 +77,7 @@
 </template>
 <script>
 import myheader from '@/components/header';
-import {mapGetters, mpaActions} from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
     components:{'myheader':myheader},
@@ -99,7 +100,7 @@ export default {
     },
     mounted(){
         $('#wrapper').css('height',window.innerHeight);
-        $('.el-tabs__content').css({'height':window.innerHeight-150,'overflow-y':'auto','-ms-overflow-style': 'none'});
+        $('.el-tabs__content').css({'height':window.innerHeight-102,'overflow-y':'auto','-ms-overflow-style': 'none'});
     },
     methods:{
         getTitle(data){
@@ -112,7 +113,7 @@ export default {
             },1000)
         },
         add(item){
-            if(item=='index'){this.activeTab=item;return ;}            
+            if(item == 'index'){this.activeTab=item;return;}
             
             //新开页面,Q1:新开页面在vuex中取到的permission为空，暂时用storage代替
             if(item.new_page==1){
@@ -132,7 +133,7 @@ export default {
             this.activeTab = item.com_name;
             $('.el-menu-item').removeClass('is-active');
             $('#'+item.menu_id).addClass('is-active');
-            $('.el-tabs__content').css({'height':window.innerHeight-150,'overflow-y':'auto','-ms-overflow-style': 'none'});
+            $('.el-tabs__content').css({'height':window.innerHeight-102,'overflow-y':'auto','-ms-overflow-style': 'none'});
         },
         removeTab(targetName){
             if(targetName=='index') {return;}
@@ -145,13 +146,10 @@ export default {
                     break;
                 }
             }
-            //console.log(this.tabs,targetName,activeName)
             this.activeTab = activeName;            
-            //$('#tab-'+targetName).css('display','none');
-            //$('#pane-'+targetName).css('display','none');
             $('#tab-'+targetName).remove();
             $('#pane-'+targetName).remove();
-            $('.el-tabs__content').css({'height':window.innerHeight-150,'overflow-y':'auto','-ms-overflow-style': 'none'});            
+            $('.el-tabs__content').css({'height':window.innerHeight-102,'overflow-y':'auto','-ms-overflow-style': 'none'});            
         },
         handleTabs(name,flag){
             for(var i=0; i < this.tabs.length; i++){
@@ -265,7 +263,7 @@ window.onresize = function(){$('#wrapper').css('height',window.innerHeight);}
     .left-menu::-webkit-scrollbar {display: none;}
     .left-menu:not(.el-menu--collapse) {width: 200px;}
 
-    .el-main{overflow: hidden;}
+    .el-main{overflow: hidden;padding: 0}
     
     .page-header{
         background-color: rgb(227, 242, 253);
